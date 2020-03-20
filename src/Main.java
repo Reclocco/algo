@@ -9,6 +9,7 @@ public class Main {
     static int swaps;
     static long startTime, endTime;
 
+    //Misc
     private static void choice(int type, int comp, int[] arr) {
         switch (type) {
             case 1:
@@ -34,7 +35,6 @@ public class Main {
         if (comp == 1)
             flip(arr);
     }
-
     public static void flip(int[] arr) {
         int tmp;
         int p = 0;
@@ -46,7 +46,131 @@ public class Main {
             arr[q - i] = tmp;
         }
     }
+    private static int random() {
+        Random r = new Random();
+        return r.nextInt(2000000) - 1000000;
+    }
 
+    //Dual pivot
+    public static int[] partitionDP(int[] arr, int beg, int end) {
+        int pivot1 = arr[beg];
+        int pivot2 = arr[end];
+        int tmp;
+        int true_beg = beg;
+
+        comparisons++;
+        if(pivot1>pivot2){
+            swaps += 3;
+            tmp = arr[beg];
+            arr[beg] = arr[end];
+            arr[end] = tmp;
+        }
+
+        for (int i = beg; i < end; i++) {
+            comparisons++;
+            if (arr[i] < pivot2) {
+                swaps += 3;
+                tmp = arr[i];
+                arr[i] = arr[beg];
+                arr[beg] = tmp;
+                beg++;
+            }
+        }
+
+        swaps += 3;
+        tmp = arr[beg];
+        arr[beg] = pivot2;
+        arr[end] = tmp;
+
+        for (int i = beg; i < end; i++) {
+            comparisons++;
+            if (arr[i] < pivot2) {
+                swaps += 3;
+                tmp = arr[i];
+                arr[i] = arr[beg];
+                arr[beg] = tmp;
+                beg++;
+            }
+        }
+
+        swaps += 3;
+        tmp = arr[beg];
+        arr[beg] = pivot2;
+        arr[end] = tmp;
+
+        return new int[] {beg, end};
+    }
+    public static void quicksortDP(int[] arr, int beg, int end) {
+
+        int part = partition(arr, beg, end);
+
+        if (part - 1 > beg) {
+            comparisons++;
+            quicksort(arr, beg, part - 1);
+        }
+        if (part + 1 < end) {
+            comparisons++;
+            quicksort(arr, part + 1, end);
+        }
+    }
+
+    //Quick
+    public static int partition(int[] arr, int beg, int end) {
+        int pivot = arr[end];
+        int tmp;
+
+        for (int i = beg; i < end; i++) {
+            comparisons++;
+            if (arr[i] < pivot) {
+                swaps += 3;
+                tmp = arr[i];
+                arr[i] = arr[beg];
+                arr[beg] = tmp;
+                beg++;
+            }
+        }
+        swaps += 3;
+        tmp = arr[beg];
+        arr[beg] = pivot;
+        arr[end] = tmp;
+
+        return beg;
+    }
+    public static void quicksort(int[] arr, int beg, int end) {
+
+        int part = partition(arr, beg, end);
+
+        if (part - 1 > beg) {
+            comparisons++;
+            quicksort(arr, beg, part - 1);
+        }
+        if (part + 1 < end) {
+            comparisons++;
+            quicksort(arr, part + 1, end);
+        }
+    }
+
+    //Insert
+    public static void insertsort(int[] arr) {
+        int q = 1;
+        int p = 0;
+        int tmp;
+        while (q < arr.length) {
+            comparisons++;
+            while (q - 1 - p >= 0 && arr[q - 1 - p] > arr[q - p]) {
+                comparisons++;
+                swaps+=3;
+                tmp = arr[q - p];
+                arr[q - p] = arr[q - p - 1];
+                arr[q - p - 1] = tmp;
+                p++;
+            }
+            q++;
+            p = 0;
+        }
+    }
+
+    //Merge
     public static void merge(int[] arr, int beg, int mid, int end) {
         int i, j, k;
         int n1 = mid-beg+1;
@@ -95,62 +219,6 @@ public class Main {
             comparisons++;
         }
     }
-
-    public static int partition(int[] arr, int beg, int end) {
-        int pivot = arr[end];
-        int tmp;
-
-        for (int i = beg; i < end; i++) {
-            if (arr[i] < pivot) {
-                comparisons++;
-                swaps += 3;
-                tmp = arr[i];
-                arr[i] = arr[beg];
-                arr[beg] = tmp;
-                beg++;
-            }
-        }
-        swaps += 3;
-        tmp = arr[beg];
-        arr[beg] = pivot;
-        arr[end] = tmp;
-
-        return beg;
-    }
-
-    public static void quicksort(int[] arr, int beg, int end) {
-
-        int part = partition(arr, beg, end);
-
-        if (part - 1 > beg) {
-            comparisons++;
-            quicksort(arr, beg, part - 1);
-        }
-        if (part + 1 < end) {
-            comparisons++;
-            quicksort(arr, part + 1, end);
-        }
-    }
-
-    public static void insertsort(int[] arr) {
-        int q = 1;
-        int p = 0;
-        int tmp;
-        while (q < arr.length) {
-            comparisons++;
-            while (q - 1 - p >= 0 && arr[q - 1 - p] > arr[q - p]) {
-                comparisons++;
-                swaps+=3;
-                tmp = arr[q - p];
-                arr[q - p] = arr[q - p - 1];
-                arr[q - p - 1] = tmp;
-                p++;
-            }
-            q++;
-            p = 0;
-        }
-    }
-
     public static void mergesort(int[] arr, int beg, int end) {
         if (beg < end) {
             int m = beg + (end - beg) / 2;
@@ -162,11 +230,7 @@ public class Main {
         }
     }
 
-    private static int random() {
-        Random r = new Random();
-        return r.nextInt(2000000) - 1000000;
-    }
-
+    //Main
     public static void main(String[] args) {
         /*
             -1 -> wrong action
