@@ -53,8 +53,8 @@ public class Main {
 
     //Dual pivot
     public static int[] partitionDP(int[] arr, int beg, int end) {
-        int pivot1 = arr[beg];
-        int pivot2 = arr[end];
+        int pivot1 = arr[end];
+        int pivot2 = arr[beg];
         int tmp;
         int true_beg = beg;
 
@@ -71,6 +71,7 @@ public class Main {
         for (int i = beg; i < end; i++) {
             comparisons++;
             if (arr[i] < pivot1) {
+                System.out.println("DOING THIS");
                 swaps += 3;
                 tmp = arr[i];
                 arr[i] = arr[beg];
@@ -88,6 +89,7 @@ public class Main {
         for (int i = true_beg; i < beg; i++) {
             comparisons++;
             if (arr[i] > pivot2) {
+                System.out.println("DOING THAT");
                 swaps += 3;
                 tmp = arr[i];
                 arr[i] = arr[true_beg];
