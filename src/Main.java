@@ -58,6 +58,7 @@ public class Main {
         int tmp;
         int true_beg = beg;
 
+        //Pivot swap
         comparisons++;
         if(pivot1>pivot2){
             swaps += 3;
@@ -66,9 +67,10 @@ public class Main {
             arr[end] = tmp;
         }
 
+        //First partition
         for (int i = beg; i < end; i++) {
             comparisons++;
-            if (arr[i] < pivot2) {
+            if (arr[i] < pivot1) {
                 swaps += 3;
                 tmp = arr[i];
                 arr[i] = arr[beg];
@@ -82,35 +84,38 @@ public class Main {
         arr[beg] = pivot2;
         arr[end] = tmp;
 
-        for (int i = beg; i < end; i++) {
+        //Second partition
+        for (int i = true_beg; i < beg; i++) {
             comparisons++;
-            if (arr[i] < pivot2) {
+            if (arr[i] > pivot2) {
                 swaps += 3;
                 tmp = arr[i];
-                arr[i] = arr[beg];
-                arr[beg] = tmp;
-                beg++;
+                arr[i] = arr[true_beg];
+                arr[true_beg] = tmp;
+                true_beg++;
             }
         }
 
         swaps += 3;
-        tmp = arr[beg];
-        arr[beg] = pivot2;
-        arr[end] = tmp;
+        tmp = arr[true_beg];
+        arr[true_beg] = pivot1;
+        arr[beg] = tmp;
 
-        return new int[] {beg, end};
+        return new int[] {true_beg, beg};
     }
     public static void quicksortDP(int[] arr, int beg, int end) {
 
-        int part = partition(arr, beg, end);
+        int[] part = partitionDP(arr, beg, end);
 
-        if (part - 1 > beg) {
-            comparisons++;
-            quicksort(arr, beg, part - 1);
+        comparisons+=3;
+        if (part[0] - 1 > beg) {
+            quicksort(arr, beg, part[0] - 1);
         }
-        if (part + 1 < end) {
-            comparisons++;
-            quicksort(arr, part + 1, end);
+        if (part[1] - part[0] > 1) {
+            quicksort(arr, part[0] + 1, part[1] - 1);
+        }
+        if (part[1] + 1 < end) {
+            quicksort(arr, part[1] + 1, end);
         }
     }
 
@@ -359,11 +364,17 @@ public class Main {
         }
 
         //Sorting testing
-//        int[] arg = new int[3];
-//        arg[0] = 45;
-//        arg[1] = 1;
-//        arg[2] = 64;
-//        System.out.println(Arrays.toString(arg));
+        int[] arg = new int[7];
+        arg[0] = 45;
+        arg[1] = 1;
+        arg[2] = 64;
+        arg[3] = 3;
+        arg[4] = 76;
+        arg[5] = 614;
+        arg[6] = 5;
+        System.out.println(Arrays.toString(arg));
+        quicksortDP(arg, 0, arg.length-1);
+        System.out.println(Arrays.toString(arg));
 //        quicksort(arg, 0, arg.length - 1);
 //        System.out.println(Arrays.toString(arg));
 //        flip(arg);
