@@ -30,6 +30,11 @@ public class Main {
                 endTime = System.nanoTime();
                 timeElapsed = endTime - startTime;
                 break;
+            case 4:
+                startTime = System.nanoTime();
+                quicksortDP(arr, 0, arr.length - 1);
+                endTime = System.nanoTime();
+                timeElapsed = endTime - startTime;
         }
 
         if (comp == 1)
@@ -142,6 +147,7 @@ public class Main {
             }
             k++;
         }
+        comparisons++;
         j--;
         g++;
 
@@ -319,6 +325,9 @@ public class Main {
                         break;
                     case "quick":
                         type = 3;
+                        break;
+                    case "quickDP":
+                        type = 4;
                         break;
                     default:
                         System.out.println("wrong input!");
