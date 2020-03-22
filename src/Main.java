@@ -53,71 +53,117 @@ public class Main {
 
     //Dual pivot
     public static int[] partitionDP(int[] arr, int beg, int end) {
-        int pivot1 = arr[end];
-        int pivot2 = arr[beg];
         int tmp;
-        int true_beg = beg;
+        int lowcount=0;
+        int highcount=0;
 
-        //Pivot swap
         comparisons++;
-        if(pivot1>pivot2){
-            swaps += 3;
-            tmp = arr[beg];
-            arr[beg] = arr[end];
-            arr[end] = tmp;
+        if(arr[beg]>arr[end]){
+            tmp=arr[beg];
+            arr[beg]=arr[end];
+            arr[end]=tmp;
         }
 
-        //First partition
-        for (int i = beg; i < end; i++) {
+        int j=beg+1, g=end-1;
+        int k=beg+1;
+        int pivot1=arr[beg], pivot2=arr[end];
+
+        while(k <= g){
             comparisons++;
-            if (arr[i] < pivot1) {
-                System.out.println("DOING THIS");
-                swaps += 3;
-                tmp = arr[i];
-                arr[i] = arr[beg];
-                arr[beg] = tmp;
-                beg++;
-            }
-        }
-
-        swaps += 3;
-        tmp = arr[beg];
-        arr[beg] = pivot2;
-        arr[end] = tmp;
-
-        //Second partition
-        for (int i = true_beg; i < beg; i++) {
             comparisons++;
-            if (arr[i] > pivot2) {
-                System.out.println("DOING THAT");
-                swaps += 3;
-                tmp = arr[i];
-                arr[i] = arr[true_beg];
-                arr[true_beg] = tmp;
-                true_beg++;
+            if(lowcount>highcount) {
+                if (arr[k] < pivot1) {
+                    comparisons++;
+                    swaps+=3;
+                    lowcount++;
+                    tmp = arr[k];
+                    arr[k] = arr[j];
+                    arr[j] = tmp;
+                    j++;
+                } else if (arr[k] >= pivot2) {
+                    comparisons++;
+                    comparisons++;
+                    highcount++;
+                    while (arr[g] > pivot2 && k < g) {
+                        comparisons++;
+                        g--;
+                    }
+
+                    swaps+=3;
+                    tmp = arr[k];
+                    arr[k] = arr[g];
+                    arr[g] = tmp;
+                    g--;
+
+                    comparisons++;
+                    if (arr[k] < pivot1) {
+                        swaps+=3;
+                        lowcount++;
+                        tmp = arr[k];
+                        arr[k] = arr[j];
+                        arr[j] = tmp;
+                        j++;
+                    }
+                }
+            } else {
+                if (arr[k] >= pivot2) {
+                    comparisons++;
+                    highcount++;
+                    while (arr[g] > pivot2 && k < g) {
+                        comparisons++;
+                        g--;
+                    }
+
+                    swaps+=3;
+                    tmp = arr[k];
+                    arr[k] = arr[g];
+                    arr[g] = tmp;
+                    g--;
+
+                    comparisons++;
+                    if (arr[k] < pivot1) {
+                        swaps+=3;
+                        lowcount++;
+                        tmp = arr[k];
+                        arr[k] = arr[j];
+                        arr[j] = tmp;
+                        j++;
+                    }
+                } else if (arr[k] < pivot1) {
+                    comparisons++;
+                    comparisons++;
+                    swaps+=3;
+                    lowcount++;
+                    tmp = arr[k];
+                    arr[k] = arr[j];
+                    arr[j] = tmp;
+                    j++;
+                }
             }
+            k++;
         }
+        j--;
+        g++;
 
-        swaps += 3;
-        tmp = arr[true_beg];
-        arr[true_beg] = pivot1;
-        arr[beg] = tmp;
+        swaps+=6;
+        tmp=arr[beg];
+        arr[beg]=arr[j];
+        arr[j]=tmp;
 
-        return new int[] {true_beg, beg};
+        tmp=arr[end];
+        arr[end]=arr[g];
+        arr[g]=tmp;
+
+        return new int[] {j, g};
     }
     public static void quicksortDP(int[] arr, int beg, int end) {
+        comparisons++;
+        if(beg < end) {
+            int[] part = partitionDP(arr, beg, end);
 
-        int[] part = partitionDP(arr, beg, end);
-
-        comparisons+=3;
-        if (part[0] - 1 > beg) {
-            quicksort(arr, beg, part[0] - 1);
-        }
-        if (part[1] - part[0] > 1) {
-            quicksort(arr, part[0] + 1, part[1] - 1);
-        }
-        if (part[1] + 1 < end) {
-            quicksort(arr, part[1] + 1, end);
+            quicksortDP(arr, beg, part[0] - 1);
+            quicksortDP(arr, part[0] + 1, part[1] - 1);
+            quicksortDP(arr, part[1] + 1, end);
         }
     }
 
@@ -367,13 +413,13 @@ public class Main {
 
         //Sorting testing
         int[] arg = new int[7];
-        arg[0] = 45;
+        arg[0] = 6;
         arg[1] = 1;
-        arg[2] = 64;
+        arg[2] = 453;
         arg[3] = 3;
-        arg[4] = 76;
-        arg[5] = 614;
-        arg[6] = 5;
+        arg[4] = 64;
+        arg[5] = 4;
+        arg[6] = 63;
         System.out.println(Arrays.toString(arg));
         quicksortDP(arg, 0, arg.length-1);
         System.out.println(Arrays.toString(arg));
