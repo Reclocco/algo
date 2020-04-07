@@ -10,7 +10,7 @@ class MyFileWriter {
     public MySort chooseSort(int i){
         switch (i){
             case 1:
-                return new DualPivot();
+                return new DualPivotCount();
             case 2:
                 return new MergeSort();
             case 3:
@@ -42,16 +42,15 @@ class MyFileWriter {
         }
         for (int i = 0; i < 100; i++) {
             for (int sort = 1; sort < 5; sort++) {
-                currSort = chooseSort(sort);
-
                 for (int m = 0; m < k; m++) {
+                    currSort = chooseSort(sort);
 
-                    int[] rand = new int[10000];
+                    int[] rand = new int[(i+1)*100];
                     for (int j = 0; j < rand.length; j++)
                         rand[j] = MyUtilities.random();
 
                     long start = System.nanoTime();
-                    currSort.sort(rand, 0, 9999);
+                    currSort.sort(rand, 0, rand.length-1);
                     long elapsedTime = System.nanoTime() - start;
 
                     try {

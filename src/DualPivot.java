@@ -20,7 +20,6 @@ public class DualPivot implements MySort {
 
         while(k <= g){
             comparisons++;
-            comparisons++;
             if(lowcount>highcount) {
                 if (arr[k] < pivot1) {
                     comparisons++;
@@ -31,15 +30,14 @@ public class DualPivot implements MySort {
                     arr[j] = tmp;
                     j++;
                 } else if (arr[k] >= pivot2) {
-                    comparisons++;
-                    comparisons++;
+                    comparisons+=2;
                     highcount++;
                     while (arr[g] > pivot2 && k < g) {
                         comparisons++;
                         g--;
                     }
 
-                    swaps+=1;
+                    swaps++;
                     tmp = arr[k];
                     arr[k] = arr[g];
                     arr[g] = tmp;
@@ -48,7 +46,6 @@ public class DualPivot implements MySort {
                     comparisons++;
                     if (arr[k] < pivot1) {
                         swaps+=1;
-                        lowcount++;
                         tmp = arr[k];
                         arr[k] = arr[j];
                         arr[j] = tmp;
@@ -64,7 +61,7 @@ public class DualPivot implements MySort {
                         g--;
                     }
 
-                    swaps+=3;
+                    swaps++;
                     tmp = arr[k];
                     arr[k] = arr[g];
                     arr[g] = tmp;
@@ -72,16 +69,14 @@ public class DualPivot implements MySort {
 
                     comparisons++;
                     if (arr[k] < pivot1) {
-                        swaps+=1;
-                        lowcount++;
+                        swaps++;
                         tmp = arr[k];
                         arr[k] = arr[j];
                         arr[j] = tmp;
                         j++;
                     }
                 } else if (arr[k] < pivot1) {
-                    comparisons++;
-                    comparisons++;
+                    comparisons+=2;
                     swaps+=1;
                     lowcount++;
                     tmp = arr[k];
@@ -120,11 +115,9 @@ public class DualPivot implements MySort {
     }
 
     public int getComparisons(){
-        comparisons = 0;
         return comparisons;
     }
     public int getSwaps(){
-        swaps = 0;
         return swaps;
     }
 }

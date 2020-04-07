@@ -63,11 +63,10 @@ public class MergeSort implements MySort {
     }
 
     public int getComparisons(){
-        comparisons = 0;
         return comparisons;
     }
     public int getSwaps(){
-        swaps = 0;
         return swaps;
     }
+
 }

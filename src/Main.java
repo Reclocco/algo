@@ -49,10 +49,10 @@ public class Main {
 
             if (comp == 0) {
                 switch (x) {
-                    case "'>='":
+                    case ">=":
                         comp = 1;
                         break;
-                    case "'<='":
+                    case "<=":
                         comp = 2;
                         break;
                 }
@@ -95,5 +95,11 @@ public class Main {
                 e.printStackTrace();
             }
         }
+
+        DualPivotCount dualPivotCount = new DualPivotCount();
+        int[] myarr = {1, 654, 3, 88, 5};
+        dualPivotCount.sort(myarr, 0, myarr.length-1);
+        System.out.println(Arrays.toString(myarr));
+
     }
 }
