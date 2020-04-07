@@ -89,7 +89,6 @@ public class Main {
         } else {
             MyFileWriter myFileWriter = null;
             try {
-                System.out.println("Write!");
                 myFileWriter = new MyFileWriter(file, k);
                 myFileWriter.test();
             } catch (IOException e) {

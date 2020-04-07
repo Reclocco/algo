@@ -25,7 +25,7 @@ class MyFileWriter {
         file_name = file;
         this.k = k;
 
-        File f = new File("C:\\Users\\micha\\Desktop\\Projekty\\4sem\\algo");
+        File f = new File("C:\\Users\\micha\\Desktop\\Projekty\\4sem\\algo\\wyniki");
         if (f.exists() && f.isFile())
         {
             f.delete();
@@ -51,19 +51,19 @@ class MyFileWriter {
                         rand[j] = MyUtilities.random();
 
                     long start = System.nanoTime();
-                    currSort.sort(rand, 0, 99999);
+                    currSort.sort(rand, 0, 9999);
                     long elapsedTime = System.nanoTime() - start;
 
                     try {
                         assert writer != null;
                         writer.append(String.valueOf((i + 1) * 100));
-                        writer.append(" ");
+                        writer.append("\n");
                         writer.append(String.valueOf(currSort.getComparisons()));
-                        writer.append(" ");
+                        writer.append("\n");
                         writer.append(String.valueOf(currSort.getSwaps()));
-                        writer.append(" ");
+                        writer.append("\n");
                         writer.append(String.valueOf(elapsedTime));
-                        writer.append(" ");
+                        writer.append("\n");
 
                     } catch (IOException e) {
                         e.printStackTrace();
