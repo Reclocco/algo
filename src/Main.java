@@ -95,11 +95,5 @@ public class Main {
                 e.printStackTrace();
             }
         }
-
-        DualPivotCount dualPivotCount = new DualPivotCount();
-        int[] myarr = {1, 654, 3, 88, 5};
-        dualPivotCount.sort(myarr, 0, myarr.length-1);
-        System.out.println(Arrays.toString(myarr));
-
     }
 }

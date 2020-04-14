@@ -16,8 +16,8 @@ public class MyUtilities {
                 quickSort.sort(arr, 0, arr.length - 1);
                 break;
             case 4:
-                DualPivot dualPivot = new DualPivot();
-                dualPivot.sort(arr, 0, arr.length - 1);
+                DualPivotCount dualPivotCount = new DualPivotCount();
+                dualPivotCount.sort(arr, 0, arr.length - 1);
                 break;
         }
 
@@ -37,6 +37,6 @@ public class MyUtilities {
     }
     static int random() {
         Random r = new Random();
-        return r.nextInt(2000000) - 1000000;
+        return r.nextInt(1000000);
     }
 }

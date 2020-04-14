@@ -17,6 +17,8 @@ class MyFileWriter {
                 return new InsertSort();
             case 4:
                 return new QuickSort();
+            case 5:
+                return new RadixSort();
         }
         return null;
     }
@@ -41,7 +43,7 @@ class MyFileWriter {
             e.printStackTrace();
         }
         for (int i = 0; i < 100; i++) {
-            for (int sort = 1; sort < 5; sort++) {
+            for (int sort = 5; sort < 6; sort++) {
                 for (int m = 0; m < k; m++) {
                     currSort = chooseSort(sort);
 
@@ -55,14 +57,14 @@ class MyFileWriter {
 
                     try {
                         assert writer != null;
-                        writer.append(String.valueOf((i + 1) * 100));
-                        writer.append("\n");
-                        writer.append(String.valueOf(currSort.getComparisons()));
-                        writer.append("\n");
-                        writer.append(String.valueOf(currSort.getSwaps()));
-                        writer.append("\n");
+//                        writer.append(String.valueOf((i + 1) * 100));
+//                        writer.append(",");
+//                        writer.append(String.valueOf(currSort.getComparisons()));
+//                        writer.append(",");
+//                        writer.append(String.valueOf(currSort.getSwaps()));
+//                        writer.append(",");
                         writer.append(String.valueOf(elapsedTime));
-                        writer.append("\n");
+                        writer.append(",");
 
                     } catch (IOException e) {
                         e.printStackTrace();
