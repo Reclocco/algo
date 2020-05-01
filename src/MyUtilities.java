@@ -19,6 +19,10 @@ public class MyUtilities {
                 DualPivotCount dualPivotCount = new DualPivotCount();
                 dualPivotCount.sort(arr, 0, arr.length - 1);
                 break;
+            case 5:
+                RadixSort radixSort = new RadixSort();
+                radixSort.sort(arr, 0, arr.length - 1);
+                break;
         }
 
         if (comp == 1)

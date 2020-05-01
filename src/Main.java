@@ -41,6 +41,9 @@ public class Main {
                     case "dualpivot":
                         type = 4;
                         break;
+                    case "radix":
+                        type = 5;
+                        break;
                     default:
                         System.out.println("wrong input!");
                         break label;
